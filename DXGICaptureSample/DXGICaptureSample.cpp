@@ -14,11 +14,10 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	CoInitialize(NULL);
 
-	g_DXGIManager.SetCaptureSource(CSDesktop);
+	g_DXGIManager.SetCaptureSource(CSMonitor1);
 
 	RECT rcDim;
 	g_DXGIManager.GetOutputRect(rcDim);
-
 	DWORD dwWidth = rcDim.right - rcDim.left;
 	DWORD dwHeight = rcDim.bottom - rcDim.top;
 
@@ -80,7 +79,9 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 
 	if (SUCCEEDED(hr)) {
-		hr = spFrame->SetSize(dwWidth, dwHeight);
+		//hr = spFrame->SetSize(dwWidth, dwHeight);
+		hr = spFrame->SetSize(360, 18);
+
 	}
 
 	WICPixelFormatGUID format;
