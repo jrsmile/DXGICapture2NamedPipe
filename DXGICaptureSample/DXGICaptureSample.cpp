@@ -17,9 +17,6 @@ int _tmain(int argc, _TCHAR* argv[])
 	g_DXGIManager.GetOutputRect(rcDim);
 	DWORD dwWidth = rcDim.right - rcDim.left;
 	DWORD dwHeight = rcDim.bottom - rcDim.top;
-
-	printf("dwWidth=%d dwHeight=%d\n", dwWidth, dwHeight);
-
 	DWORD dwBufSize = dwWidth*dwHeight*4;
 
 	BYTE* pBuf = new BYTE[dwBufSize];
@@ -38,15 +35,10 @@ int _tmain(int argc, _TCHAR* argv[])
 		printf("GetOutputBits failed with hr=0x%08x\n", hr);
 		return hr;
 	}
-
-	UINT tmp;
 	UINT offset;
-	for (int a = 0; a < 360; a = a + 4) {
+	for (int a = 1; a < 364; a = a + 4) {
 		offset = a * 4;
-		tmp = ((pBuf[offset + 1]) << 24) | ((pBuf[offset + 2]) << 16) | ((pBuf[offset + 3]) << 8) | ((pBuf[offset + 4]));
-		if (tmp != 65280){
-			printf("%u pixel: %u\n", a, tmp);
-	}
+			printf("\#%02x%02x%02x\n", pBuf[offset + 2], pBuf[offset + 1], pBuf[offset]);
 	}
 	
 	delete[] pBuf;
