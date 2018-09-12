@@ -26,20 +26,11 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	BYTE* pBuf = new BYTE[dwBufSize];
 	HRESULT hr;
-	unsigned long color;
-
+	
 	HANDLE hPipe;
 	DWORD dwWritten;
-	char cPipeBuffer[8];
+	char cPipeBuffer[7];
 	
-	hPipe = CreateFile(TEXT("\\\\.\\pipe\\Pipe"),
-		GENERIC_READ | GENERIC_WRITE,
-		0,
-		NULL,
-		OPEN_EXISTING,
-		0,
-		NULL);
-
 	int i;
 	while (true){
 	i=0;
@@ -56,15 +47,23 @@ int _tmain(int argc, _TCHAR* argv[])
 		return hr;
 	}
 	
-	// printf("#start\n");
+	// start
+	hPipe = CreateFile(TEXT("\\\\.\\pipe\\Pipe"),
+		GENERIC_READ | GENERIC_WRITE,
+		0,
+		NULL,
+		OPEN_EXISTING,
+		0,
+		NULL);
 	UINT offset;
 	for (int a = 1; a < 364; a = a + 4) {
 		offset = a * 4;
 		//	printf("#%02x%02x%02x\n", pBuf[offset + 2], pBuf[offset + 1], pBuf[offset]);
-		snprintf(cPipeBuffer, sizeof cPipeBuffer,"#%02x%02x%02x\n", pBuf[offset + 2], pBuf[offset + 1], pBuf[offset]);
-		WriteFile(hPipe,cPipeBuffer, sizeof cPipeBuffer + 2, &dwWritten, NULL);
+		snprintf(cPipeBuffer, sizeof cPipeBuffer,"%02x%02x%02x", pBuf[offset + 2], pBuf[offset + 1], pBuf[offset]);
+		WriteFile(hPipe,cPipeBuffer, sizeof cPipeBuffer +2, &dwWritten, NULL);
 	}
-	//printf("#end\n");
+	// End
+	CloseHandle(hPipe);
 	}
 	delete[] pBuf;
 
