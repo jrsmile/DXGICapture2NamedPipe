@@ -57,7 +57,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		NULL);
 	UINT offset;
 	for (int a = 1; a < 364; a = a + 4) {
-		offset = a * 4;
+		offset = a;
 		//	printf("#%02x%02x%02x\n", pBuf[offset + 2], pBuf[offset + 1], pBuf[offset]);
 		snprintf(cPipeBuffer, sizeof cPipeBuffer,"%02x%02x%02x", pBuf[offset + 2], pBuf[offset + 1], pBuf[offset]);
 		WriteFile(hPipe,cPipeBuffer, sizeof cPipeBuffer +2, &dwWritten, NULL);
